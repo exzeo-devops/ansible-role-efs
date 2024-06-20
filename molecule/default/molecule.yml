@@ -6,10 +6,10 @@ driver:
   name: docker
 
 platforms:
-  - name: ubuntu-nobal
-    image: ubuntu:24.04
-  # - name: ubuntu-jammy
-  #   image: ubuntu:22.04
+  # - name: ubuntu-nobal
+  #   image: ubuntu:24.04
+  - name: ubuntu-jammy
+    image: ubuntu:22.04
   # - name: ubuntu-focal
   #   image: ubuntu:20.04
 
@@ -17,4 +17,4 @@ provisioner:
   name: ansible
 
 verifier:
-  name: testinfra
+  name: ansible

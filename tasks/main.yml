@@ -18,7 +18,7 @@
   ansible.builtin.file:
     path: "{{ efs_data_dir }}"
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: Ensure EFS volume is mounted.
   ansible.posix.mount:
@@ -26,5 +26,5 @@
     src: "{{ efs_dns_name }}:/"
     fstype: "{{ efs_mount_fstype }}"
     opts: "{{ efs_mount_opts }}"
-    state: mounted
+    state: "{{ efs_mount_state }}"
   when: efs_dns_name != ""

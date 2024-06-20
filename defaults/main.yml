@@ -13,3 +13,6 @@ efs_mount_fstype: "nfs4"
 # Defaults to "nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport"
 # https://docs.aws.amazon.com/efs/latest/ug/mounting-fs-mount-cmd-general.html
 efs_mount_opts: "nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport"
+
+# Used to determine state
+efs_mount_state: mounted

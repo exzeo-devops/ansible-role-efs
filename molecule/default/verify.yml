@@ -1,0 +1,37 @@
+- name: Verify nfsstat and fstab
+  hosts: all
+  tasks:
+    - name: Check if nfsstat is installed
+      command: nfsstat --version
+      register: nfsstat_version
+      ignore_errors: yes
+
+    - name: Assert nfsstat is installed
+      assert:
+        that:
+          - nfsstat_version.rc == 0
+          - "'nfsstat' in nfsstat_version.stdout"
+        fail_msg: "nfsstat is not installed or not found in the PATH"
+
+    - name: Check if /etc/fstab exists
+      stat:
+        path: /etc/fstab
+      register: fstab_file
+
+    - name: Assert /etc/fstab exists
+      assert:
+        that:
+          - fstab_file.stat.exists
+        fail_msg: "/etc/fstab does not exist"
+
+    - name: Read /etc/fstab
+      command: cat /etc/fstab
+      register: fstab_content
+      when: fstab_file.stat.exists
+
+    - name: Assert /etc/fstab contains the NFS mount
+      assert:
+        that:
+          - "'test.efs.aws.com:/ /data nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport' in fstab_content.stdout"
+        fail_msg: "/etc/fstab does not contain the expected NFS mount"
+      when: fstab_file.stat.exists
