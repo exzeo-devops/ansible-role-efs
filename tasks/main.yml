@@ -4,7 +4,6 @@
     name: 
       - nfs-common
     state: present
-    force: true
     update_cache: yes
   register: package_ok
   retries: 5
