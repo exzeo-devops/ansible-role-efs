@@ -1,0 +1,30 @@
+---
+- name: Install nfs-common
+  ansible.builtin.apt:
+    name: 
+      - nfs-common
+    state: present
+    force: true
+    update_cache: yes
+  register: package_ok
+  retries: 5
+  delay: 2
+  until: package_ok is success
+  tags:
+    - install
+    - install-dependency
+
+- name: Ensure mount directory exists.
+  ansible.builtin.file:
+    path: "{{ efs_data_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Ensure EFS volume is mounted.
+  ansible.posix.mount:
+    path: "{{ efs_data_dir }}"
+    src: "{{ efs_dns_name }}:/"
+    fstype: "{{ efs_mount_fstype }}"
+    opts: "{{ efs_mount_opts }}"
+    state: mounted
+  when: efs_dns_name != ""
