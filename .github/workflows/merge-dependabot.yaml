@@ -4,4 +4,4 @@ on: pull_request
 
 jobs:
   dependabot:
-    uses: exzeo-devops/action-workflows/.github/workflows/merge-dependabot.yaml@f705bcaa9ad1637b04f38162f45fbdf6758ccb41 # v1.0.22
+    uses: exzeo-devops/action-workflows/.github/workflows/merge-dependabot.yaml@73ca257449ebfbcf967334d0e002a67d840c2288 # v1.0.23
