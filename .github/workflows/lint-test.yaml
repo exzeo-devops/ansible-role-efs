@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github/**'
 
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
@@ -12,5 +14,11 @@ concurrency:
 
 jobs:
   ansible-checks:
-    uses: exzeo-devops/action-workflows/.github/workflows/ansible-checks.yaml@DOPS-6128
+    uses: exzeo-devops/action-workflows/.github/workflows/ansible-checks.yaml@f705bcaa9ad1637b04f38162f45fbdf6758ccb41 # v1.0.22
+    secrets: inherit
+
+  tag:
+    needs: [ansible-checks]
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: exzeo-devops/action-workflows/.github/workflows/github-tag.yaml@f705bcaa9ad1637b04f38162f45fbdf6758ccb41 # v1.0.22
     secrets: inherit
