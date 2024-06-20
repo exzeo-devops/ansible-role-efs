@@ -1,0 +1,24 @@
+name: Lint and Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/**'
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  ansible-checks:
+    uses: exzeo-devops/action-workflows/.github/workflows/ansible-checks.yaml@73ca257449ebfbcf967334d0e002a67d840c2288 # v1.0.23
+    secrets: inherit
+
+  tag:
+    needs: [ansible-checks]
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: exzeo-devops/action-workflows/.github/workflows/github-tag.yaml@73ca257449ebfbcf967334d0e002a67d840c2288 # v1.0.23
+    secrets: inherit

@@ -1,0 +1,8 @@
+---
+- name: Install
+  hosts: all
+  roles:
+    - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
+      vars:
+        efs_dns_name: "test.efs.aws.com"
+        efs_mount_state: present

@@ -1,0 +1,7 @@
+name: Dependabot auto-merge
+
+on: pull_request
+
+jobs:
+  dependabot:
+    uses: exzeo-devops/action-workflows/.github/workflows/merge-dependabot.yaml@73ca257449ebfbcf967334d0e002a67d840c2288 # v1.0.23

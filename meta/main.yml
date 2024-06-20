@@ -1,0 +1,23 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: efs
+  author: exzeo
+  description: Ansible Role for mounting for AWS Amazon Elastic File System
+  company: "Exzeo"
+  license: MIT
+  min_ansible_version: "2.1"
+
+  platforms:
+  - name: Ubuntu
+    versions:
+      - bionic
+    
+  galaxy_tags:
+    - efs
+    - aws
+    - amazon
+    - system
+    - storage
+    - nfs

@@ -1,0 +1,9 @@
+### Ansible ###
+*.retry
+venv
+
+# Environments
+venv/
+
+# Ignore pip lock
+Pipfile.lock
