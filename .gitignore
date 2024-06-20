@@ -4,3 +4,6 @@ venv
 
 # Environments
 venv/
+
+# Ignore pip lock
+Pipfile.lock
