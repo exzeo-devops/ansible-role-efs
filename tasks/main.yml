@@ -13,13 +13,21 @@
     - install
     - install-dependency
 
-- name: Ensure mount directory exists.
+- name: Ensure mount directory exists with user
   ansible.builtin.file:
     path: "{{ efs_data_dir }}"
     state: directory
-    owner: "{{ efs_folder_owner | default(omit) }}"
-    group: "{{ efs_folder_group | default(omit) }}"
+    owner: "{{ efs_folder_owner }}"
+    group: "{{ efs_folder_group }}"
     mode: "0755"
+  when: efs_folder_owner != ""
+
+- name: Ensure mount directory exists
+  ansible.builtin.file:
+    path: "{{ efs_data_dir }}"
+    state: directory
+    mode: "0755"
+  when: efs_folder_owner == ""
 
 - name: Ensure EFS volume is mounted.
   ansible.posix.mount:
