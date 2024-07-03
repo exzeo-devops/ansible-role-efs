@@ -49,3 +49,4 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     uses: exzeo-devops/action-workflows/.github/workflows/github-tag.yaml@67557042f6e2306ecc4fd428f60237129b56ed75 # v1.0.26
     secrets: inherit
+    
