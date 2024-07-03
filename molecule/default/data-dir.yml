@@ -7,6 +7,7 @@
   vars:
     efs_dns_name: "test.efs.aws.com"
     efs_mount_state: present
+    efs_data_dir: "/tmp/data"
 
   post_tasks:
     - name: Check if nfsstat is installed
@@ -42,20 +43,20 @@
     - name: Assert /etc/fstab contains the NFS mount
       ansible.builtin.assert:
         that:
-          - "'test.efs.aws.com:/ /data nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport' in fstab_content.stdout"
+          - "'test.efs.aws.com:/ /tmp/data nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport' in fstab_content.stdout"
         fail_msg: "/etc/fstab does not contain the expected NFS mount"
       when: fstab_file.stat.exists
 
     - name: Create example file in data folder
       ansible.builtin.file:
-        path: /data/example.txt
+        path: "/tmp/data/example.txt"
         state: touch
         mode: "0755"
       changed_when: false
 
-    - name: Check if /data/example.txt exists
+    - name: Check if example.txt exists
       ansible.builtin.stat:
-        path: /data/example.txt
+        path: "/tmp/data/example.txt"
       register: example_file
 
     - name: Assert example file is created

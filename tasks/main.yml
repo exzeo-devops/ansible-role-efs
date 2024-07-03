@@ -1,7 +1,7 @@
 ---
 - name: Install nfs-common
   ansible.builtin.apt:
-    name: 
+    name:
       - nfs-common
     state: present
     update_cache: yes
@@ -17,6 +17,8 @@
   ansible.builtin.file:
     path: "{{ efs_data_dir }}"
     state: directory
+    owner: "{{ efs_folder_owner }}"
+    group: "{{ efs_folder_group }}"
     mode: "0755"
 
 - name: Ensure EFS volume is mounted.

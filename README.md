@@ -1,7 +1,7 @@
 Ansible Role Golang
 =========
 
-Installs Golang on Debian/Ubuntu servers. 
+Installs Golang on Debian/Ubuntu servers.
 Releases: https://go.dev/dl/
 
 Role Variables

@@ -2,6 +2,9 @@
 # Based on ansible-lint config
 extends: default
 
+ignore:
+  - .github/
+
 rules:
   braces:
     max-spaces-inside: 1
@@ -15,7 +18,7 @@ rules:
   commas:
     max-spaces-after: -1
     level: error
-  comments: 
+  comments:
     min-spaces-from-content: 1
   comments-indentation: disable
   document-start: disable
@@ -30,8 +33,12 @@ rules:
   new-line-at-end-of-file: disable
   new-lines:
     type: unix
-  octal-values: 
+  octal-values:
     forbid-explicit-octal: true
     forbid-implicit-octal: true
+  quoted-strings:
+    quote-type: double
+    required: false
+    allow-quoted-quotes: true
   trailing-spaces: disable
   truthy: disable
