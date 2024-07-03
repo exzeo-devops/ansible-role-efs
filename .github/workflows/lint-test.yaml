@@ -14,11 +14,11 @@ concurrency:
 
 jobs:
   ansible-checks:
-    uses: exzeo-devops/action-workflows/.github/workflows/ansible-checks.yaml@73ca257449ebfbcf967334d0e002a67d840c2288 # v1.0.23
+    uses: exzeo-devops/action-workflows/.github/workflows/ansible-checks.yaml@67557042f6e2306ecc4fd428f60237129b56ed75 # v1.0.26
     secrets: inherit
 
   tag:
     needs: [ansible-checks]
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: exzeo-devops/action-workflows/.github/workflows/github-tag.yaml@73ca257449ebfbcf967334d0e002a67d840c2288 # v1.0.23
+    uses: exzeo-devops/action-workflows/.github/workflows/github-tag.yaml@67557042f6e2306ecc4fd428f60237129b56ed75 # v1.0.26
     secrets: inherit
