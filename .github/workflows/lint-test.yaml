@@ -1,24 +1,52 @@
 name: Lint and Test
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
       - main
-    paths-ignore:
-      - '.github/**'
+
+  # At 07:30 on day-of-month 1 in every 2nd month.
+  schedule:
+    - cron: "30 7 1 */2 *"
 
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
   cancel-in-progress: true
 
 jobs:
-  ansible-checks:
-    uses: exzeo-devops/action-workflows/.github/workflows/ansible-checks.yaml@67557042f6e2306ecc4fd428f60237129b56ed75 # v1.0.26
+  lint:
+    name: Check for ansible linting issues
+    uses: exzeo-devops/action-workflows/.github/workflows/ansible-lint.yaml@67557042f6e2306ecc4fd428f60237129b56ed75 # v1.0.26
     secrets: inherit
 
+  test:
+    name: Run ansible molecule testing
+    needs: [lint]
+    strategy:
+      matrix:
+        include:
+          - image: ubuntu-2404-ansible
+            playbook: converge.yml
+          - image: ubuntu-2204-ansible
+            playbook: converge.yml
+          - image: ubuntu-2004-ansible
+            playbook: converge.yml
+          - image: ubuntu-2404-ansible
+            playbook: data-dir.yml
+          - image: ubuntu-2404-ansible
+            playbook: user.yml
+
+    uses: exzeo-devops/action-workflows/.github/workflows/ansible-tests.yaml@67557042f6e2306ecc4fd428f60237129b56ed75 # v1.0.26
+    secrets: inherit
+    with:
+      image: "${{ matrix.image }}"
+      playbook: "${{ matrix.playbook }}"
+
   tag:
-    needs: [ansible-checks]
+    needs: [test]
     if: ${{ github.ref == 'refs/heads/main' }}
     uses: exzeo-devops/action-workflows/.github/workflows/github-tag.yaml@67557042f6e2306ecc4fd428f60237129b56ed75 # v1.0.26
     secrets: inherit
+    
