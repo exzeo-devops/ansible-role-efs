@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
-pylint = "3.2.6"
+pylint = "3.2.7"
 
 [packages]
 molecule = {extras = ["lint", "test"], version = "==24.7.0"}
