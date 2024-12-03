@@ -9,7 +9,7 @@ pylint = "3.3.2"
 [packages]
 molecule = {extras = ["lint", "test"], version = "==24.9.0"}
 molecule-plugins = {extras = ["docker"],version = "==23.5.3"}
-ansible-core = "==2.17.6"
+ansible-core = "==2.17.7"
 
 [requires]
 python_version = "3.10.12"
